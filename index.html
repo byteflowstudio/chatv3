@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real-Time Chat</title>
-    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
     <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
 </head>
 <body>
 
@@ -20,7 +20,7 @@
 
 <script>
     // Connect to the server
-    const socket = io('https://byteflowstudio.github.io/chatv3/');
+    const socket = io('https://your-server-url-here.com');
 
     const form = document.getElementById('form');
     const input = document.getElementById('input');
@@ -31,7 +31,7 @@
         event.preventDefault();
         const message = input.value;
         if (message) {
-            socket.emit('message', message);
+            socket.emit('message', { user: "User", message });
             input.value = '';
         }
     });
@@ -39,8 +39,9 @@
     // Listen for incoming messages
     socket.on('message', (data) => {
         const li = document.createElement('li');
-        li.textContent = `${data.user}: ${data.message}`;
+        li.innerHTML = `<strong>${data.user}:</strong> ${data.message}`;
         messageList.appendChild(li);
+        messageList.scrollTop = messageList.scrollHeight; // Auto scroll to latest message
     });
 </script>
 
